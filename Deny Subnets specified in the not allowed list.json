@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "displayName": "Deny Subnets  creation specified in the not allowed list",
+    "policyType": "Custom",
+    "mode": "All",
+    "parameters": {
+      "subnetnamenotallowed": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "Subnets Not allowed",
+          "description": "The list of subnets name not allowed."
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Network/virtualNetworks/subnets"
+          },
+          {
+            "field": "name",
+            "in": "[parameters('subnetnamenotallowed')]"
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
+}
+
+    

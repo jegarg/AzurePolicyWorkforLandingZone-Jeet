@@ -1,0 +1,23 @@
+{
+    "mode": "All",
+    "policyRule": {
+      "if": {
+        "AllOf": [
+          {
+            "equals": "Microsoft.Network/routeTables",
+            "field": "type"
+          },
+          {          
+            "equals": "none",
+            "field": "Microsoft.Network/routeTables/routes[*]"
+            }
+            ]
+          }
+        
+      },
+      "then": {
+        "effect": "Deny"
+      }
+    },
+    "parameters": { }
+  }

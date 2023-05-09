@@ -1,0 +1,31 @@
+{
+  "mode": "All",
+  "parameters":{
+    "notAllowedkerberosTicketEncryption": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256.",
+        "description": "The list of kerberosTicketEncryption not allowed."
+      }
+
+    }
+
+  },
+    "policyRule": {
+              "if": {
+                "allOf": [
+                  {
+                    "field": "type",
+                    "equals": "Microsoft.Storage/storageAccounts/fileServices"
+                  },
+                  {
+                    "field": "Microsoft.Storage/storageAccounts/fileServices/protocolSettings.smb.kerberosTicketEncryption",
+                    "contains": "[parameters('notAllowedkerberosTicketEncryption')]"
+                  }
+                ]
+              },
+              "then": {
+                "effect": "deny"
+              }
+            }
+          }

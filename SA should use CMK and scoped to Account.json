@@ -1,0 +1,57 @@
+
+{
+    "mode": "All",
+    "parameters":{},
+
+
+    "policyRule": {
+                    "if": {
+                        "allOf": [
+                        {
+                        "field": "type",
+                        "equals": "Microsoft.Storage/storageAccounts"
+                        },
+                        {
+                        "anyOf": [
+                            {
+                            "not": {
+                                "field": "Microsoft.Storage/storageAccounts/encryption.services.blob.keyType",
+                                "equals": "Account"
+                            }
+                            },
+                            {
+                            "not": {
+                                "field": "Microsoft.Storage/storageAccounts/encryption.services.file.keyType",
+                                "equals": "Account"
+                            }
+                            },
+                            {
+                            "not": {
+                                "field": "Microsoft.Storage/storageAccounts/encryption.services.table.keyType",
+                                "equals": "Account"
+                            }
+                            },
+                            {
+                            "not": {
+                                "field": "Microsoft.Storage/storageAccounts/encryption.services.queue.keyType",
+                                "equals": "Account"
+                            }
+                            },
+                            {
+                            "not": {
+                                "field": "Microsoft.Storage/storageAccounts/encryption.keySource",
+                                "equals": "Microsoft.Keyvault"
+                            }
+                            }
+                        ]
+                    }
+                ]
+            },
+
+        "then": {
+            "effect": "deny"
+        }
+
+    }
+
+}

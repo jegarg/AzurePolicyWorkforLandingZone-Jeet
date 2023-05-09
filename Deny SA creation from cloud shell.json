@@ -1,0 +1,28 @@
+{
+      "mode": "All",
+      "description": "Deny Storage Account Creation with Tag 'ms-resource-usage:azure-cloud-shell’",
+    
+      "parameters": {
+       
+      },
+      "policyRule": {
+        "if": {
+            "AllOf": [
+
+                    {
+                        "equals": "Microsoft.Storage/StorageAccounts",
+                        "field": "type"
+                    },
+                    
+                        {
+                        "field": "[concat('tags[', 'ms-resource-usage', ']')]",
+                        "equals": "azure-cloud-shell"
+                    }
+                ]
+        },
+        "then": {
+          "effect": "deny"
+        }
+    
+      }
+    }

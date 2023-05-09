@@ -1,0 +1,42 @@
+{
+    "properties": {
+      "displayName": "Deny Cross Tenant Private endpoint connection for KeyVault",
+      "policyType": "Custom",
+      "mode": "All",
+      "metadata": {
+        "category": "Network"
+      },
+      "parameters": {},
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.KeyVault/vaults/privateEndpointConnections"
+            },
+            {
+              "field":  "Microsoft.KeyVault/vaults/privateEndpointConnections/privateLinkServiceConnectionState.status",
+              "equals": "Approved"
+            },
+            {
+              "anyOf": [
+                {
+                  "field": "Microsoft.KeyVault/vaults/privateEndpointConnections/privateEndpoint.id",
+                  "exists": false
+                },
+                {
+                    "value": "[split(concat(field('Microsoft.KeyVault/vaults/privateEndpointConnections/privateEndpoint.id'), '//'), '/')[2]]",
+                    "notEquals": "[subscription().subscriptionId]"
+                }
+              ]
+            }
+          ]
+        },
+        "then": {
+          "effect": "Deny"
+        }
+      }
+    }
+   
+    }
+  

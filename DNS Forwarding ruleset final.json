@@ -1,0 +1,58 @@
+{
+    
+      "mode": "All",
+      
+      "parameters": {
+        "IPAddress": {
+          "type": "Array",
+          "metadata": {
+            "displayName": "targetDnsServers",
+            "description": "The list of DNS Servers based on Location."
+          },
+          "defaultValue": [
+            "10.100.0.4",
+            "10.100.0.6"
+          ]
+        }
+      },
+      "policyRule": {
+        "if": {
+          "AllOf": [
+            {
+              "equals": "Microsoft.Network/dnsForwardingRulesets/forwardingRules",
+              "field": "type"
+            },
+            {
+              "anyof": [
+                {
+                  "field": "Microsoft.Network/dnsForwardingRulesets/forwardingRules/domainName",
+                  "notEquals": "."
+                },
+                {
+                  "field": "Microsoft.Network/dnsForwardingRulesets/forwardingRules/forwardingRuleState",
+                  "notEquals": "Enabled"
+                },
+                {
+                  "count": {
+                    "field": "Microsoft.Network/dnsForwardingRulesets/forwardingRules/targetDnsServers[*]",
+                    "where": {
+                      "allof": [
+                        {
+                          "field": "Microsoft.Network/dnsForwardingRulesets/forwardingRules/targetDnsServers[*].ipAddress",
+                          "notin": "[parameters('IPAddress')]"
+                        }
+                      ]
+                    }
+                  },
+                  "greater": 0
+                }
+              ]
+            }
+          ]
+        },
+        "then": {
+          "effect": "Deny"
+        }
+      }
+    }
+  

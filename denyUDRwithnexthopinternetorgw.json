@@ -1,0 +1,42 @@
+{
+ 
+    "Mode": "Indexed",
+      "Description": "This policy prevents next hop internet and gateway in route tables.",
+    "DisplayName": "Prevent internet and gateway routes in route tables",
+    "Parameters": {
+     
+    },
+    "PolicyRule": {
+      "if": {
+        
+         
+          
+            "allOf": [
+              {
+                "equals": "Microsoft.Network/routeTables/routes",
+                "field": "type"
+              },
+                          {
+                          "anyof": [
+  
+              {
+                "equals": "Internet",
+                "field": "Microsoft.Network/routeTables/routes/nextHopType"
+              },
+              {
+                "equals": "VirtualNetworkGateway",
+                "field": "Microsoft.Network/routeTables/routes/nextHopType"
+  
+              }
+                          ]
+                          }
+            ]
+          
+        
+      },
+      "then": {
+        "effect": "Deny"
+      }
+    }
+  }
+  

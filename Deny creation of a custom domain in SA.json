@@ -1,0 +1,30 @@
+{
+    "mode": "All",
+    "parameter":{},
+    "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Storage/storageAccounts"
+        },
+        {
+          "anyof": [
+            {
+              "field": "Microsoft.Storage/storageAccounts/customDomain",
+              "exists": "true"
+            },
+            {
+              "field": "Microsoft.Storage/storageAccounts/customDomain.useSubDomainName",
+              "equals": "true"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+        "effect": "deny"
+      }
+
+    }
+}

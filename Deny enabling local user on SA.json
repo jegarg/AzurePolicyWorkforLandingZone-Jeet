@@ -1,0 +1,27 @@
+{
+    "mode": "All",
+    "policyRule": {
+      "if": {
+        "AllOf": [
+          {
+            "equals": "Microsoft.Storage/storageAccounts",
+            "field": "type"
+          },
+
+              {
+                
+                "field": "Microsoft.Storage/storageAccounts/isLocalUserEnabled",
+                "equals": "true"
+                }              
+            ]
+          },
+        
+    
+      "then": {
+        "effect": "Deny"
+      }
+    },
+    "parameters": {
+      
+    }
+  }

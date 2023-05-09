@@ -1,0 +1,42 @@
+{
+    "properties": {
+      "displayName": "Deny Cross Tenant Private endpoint connection for SA",
+      "policyType": "Custom",
+      "mode": "All",
+      "metadata": {
+        "category": "Network",
+      },
+      "parameters": {},
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Storage/storageAccounts/privateEndpointConnections"
+            },
+            {
+              "field": "Microsoft.Storage/storageAccounts/privateEndpointConnections/privateLinkServiceConnectionState.status",
+              "equals": "Approved"
+            },
+            {
+              "anyOf": [
+                {
+                  "field": "Microsoft.Storage/storageAccounts/privateEndpointConnections/privateEndpoint.id",
+                  "exists": false
+                },
+                {
+                  "value": "[split(concat(field('Microsoft.Storage/storageAccounts/privateEndpointConnections/privateEndpoint.id'), '//'), '/')[2]]",
+                  "notEquals": "[subscription().subscriptionId]"
+                }
+              ]
+            }
+          ]
+        },
+        "then": {
+          "effect": "Deny"
+        }
+      }
+    },
+   
+    }
+  

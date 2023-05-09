@@ -1,0 +1,22 @@
+{
+    "mode": "All",
+    "parameter": {},
+    "policyRule": {
+    "if":{
+        "allOf": [
+            {
+                "field": "type",
+                "equals": "Microsoft.KeyVault/vaults"
+            },
+            {
+                "field": "Microsoft.KeyVault/vaults/enableRbacAuthorization",
+                "equals": "false"
+            }
+        ]
+    },
+    "then": {
+        "effect": "Deny"
+    }
+
+}
+}

@@ -1,0 +1,26 @@
+{
+    "properties": {
+        "displayName": "Enable Network Policies on each subnet containing PEs",
+        "description": "Enable Network Policies on each subnet containing PEs. Checks the privateEndpointNetworkPoliciesy property on the subnet.",
+        "mode": "all",
+        "parameters": {       
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Network/virtualNetworks/subnets"
+                    },
+                    {
+                        "field": "Microsoft.Network/virtualNetworks/subnets/privateEndpointNetworkPolicies",
+                        "notEquals": "Enabled"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    }
+}

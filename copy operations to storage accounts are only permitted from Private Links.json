@@ -1,0 +1,27 @@
+{
+    "mode": "All",
+    "policyRule": {
+      "if": {
+        "AllOf": [
+          {
+            "equals": "Microsoft.Storage/StorageAccounts",
+            "field": "type"
+          },
+
+              {
+                
+                "field": "Microsoft.Storage/storageAccounts/allowedCopyScope",
+                "notequals": "PrivateLink"
+                }              
+            ]
+          },
+        
+    
+      "then": {
+        "effect": "Deny"
+      }
+    },
+    "parameters": {
+      
+    }
+  }

@@ -1,0 +1,39 @@
+{
+    "mode": "All",
+    "policyRule": {
+      "if": {
+        "AllOf": [
+          {
+            "equals": "Microsoft.Network/virtualNetworks",
+            "field": "type"
+          },
+          {
+            "anyOf": [
+              {
+                "exists": false,
+                "field": "Microsoft.Network/virtualNetworks/dhcpOptions.dnsServers"
+              },
+              {
+                "not": {
+                  "field": "Microsoft.Network/virtualNetworks/dhcpOptions.dnsServers[*]",
+                  "in": "[parameters('servers')]"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "Deny"
+      }
+    },
+    "parameters": {
+      "servers": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "DNS Servers list",
+          "description": "The list of DNS servers to enforce"
+        }
+      }
+    }
+  }

@@ -1,0 +1,23 @@
+{
+    "mode": "All",
+    "parameter":{},
+    "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Network/virtualNetworks/subnets"
+            },
+            {
+              "field": "name",
+              "match": "AzureBastionSubnet"
+            }
+          ]
+        },
+        "then": {
+          "effect": "deny"
+        }
+      }
+    }
+
+    

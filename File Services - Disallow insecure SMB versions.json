@@ -1,0 +1,27 @@
+{
+  "mode": "All",
+  "parameters":{},
+  "policyRule": { 
+  
+  
+      "if": {
+                "allOf": [
+                  {
+                    "field": "type",
+                    "equals": "Microsoft.Storage/storageAccounts/fileServices"
+                  },
+                  {
+                    "not":
+                      {
+                        "field": "Microsoft.Storage/storageAccounts/fileServices/protocolSettings.smb.versions",
+                        "contains": "SMB3.1.1"
+                      }
+                    
+                  }
+                ]
+              },
+              "then": {
+                "effect": "deny"
+              }
+            }
+          }
